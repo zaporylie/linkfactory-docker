@@ -1,0 +1,35 @@
+FROM drupaldocker/php-dev:7.0-cli-2.x
+
+# Default user uid for ubuntu users
+ARG UID=1000
+ARG GID=1000
+
+# Default username of newly created user and group in within the container.
+ARG NAME=drupal
+
+RUN addgroup -g ${GID} ${NAME} \
+ && adduser -D -u ${UID} -G ${NAME} ${NAME} \
+ && adduser ${NAME} www-data
+
+RUN mkdir -p /var/www/html/drupal-files && chown www-data:www-data /var/www/html/drupal-files && chmod g+ws /var/www/html/drupal-files
+RUN mkdir -p /var/www/html/web/sites/default/files && chown www-data:www-data /var/www/html/web/sites/default/files && chmod g+ws /var/www/html/web/sites/default/files
+
+RUN apk add --no-cache \
+   fish \
+   bc groff util-linux coreutils man mdocml-apropos \
+   python \
+ && sed -i -e "s/bin\/ash/usr\/bin\/fish/" /etc/passwd
+
+RUN curl -Lo /etc/fish/functions/fisher.fish --create-dirs https://git.io/fisher \
+ && chmod -R a+x /etc/fish/functions
+
+RUN apk add --update nodejs
+
+ENV SHELL /usr/bin/fish
+
+USER ${NAME}
+
+RUN /usr/bin/fish -c "fisher z metro host_info pwd_info segment humanize_duration last_job_id pwd_is_home git_util done z"
+
+CMD /usr/bin/fish
+
