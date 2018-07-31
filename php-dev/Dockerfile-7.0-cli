@@ -16,7 +16,7 @@ RUN mkdir -p /var/www/html/web/sites/default/files && chown www-data:www-data /v
 
 RUN apk add --no-cache \
    fish \
-   add less \
+   less \
    bc groff util-linux coreutils man mdocml-apropos \
    python \
  && sed -i -e "s/bin\/ash/usr\/bin\/fish/" /etc/passwd
