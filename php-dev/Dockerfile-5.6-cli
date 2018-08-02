@@ -17,14 +17,20 @@ RUN mkdir -p /var/www/html/web/sites/default/files && chown www-data:www-data /v
 RUN apk add --no-cache \
    fish \
    less \
+   bash \
    bc groff util-linux coreutils man mdocml-apropos \
    python \
+   nodejs \
  && sed -i -e "s/bin\/ash/usr\/bin\/fish/" /etc/passwd
 
 RUN curl -Lo /etc/fish/functions/fisher.fish --create-dirs https://git.io/fisher \
  && chmod -R a+x /etc/fish/functions
 
-RUN apk add --update nodejs
+RUN cd /root \
+ && wget https://raw.github.com/nvie/gitflow/develop/contrib/gitflow-installer.sh \
+ && chmod +x gitflow-installer.sh \
+ && ls -lah \
+ && ./gitflow-installer.sh
 
 ENV SHELL /usr/bin/fish
 
