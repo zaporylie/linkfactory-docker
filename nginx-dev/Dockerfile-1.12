@@ -1,0 +1,2 @@
+FROM drupaldocker/nginx:1.12-2.x
+COPY drupal.conf /etc/nginx/conf.d/default.conf
