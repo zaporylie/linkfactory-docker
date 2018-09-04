@@ -34,6 +34,8 @@ RUN cd /root \
 
 ENV SHELL /usr/bin/fish
 
+RUN echo "%www-data ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/50-local
+
 USER ${NAME}
 
 RUN /usr/bin/fish -c "fisher z metro host_info pwd_info segment humanize_duration last_job_id pwd_is_home git_util done z"
