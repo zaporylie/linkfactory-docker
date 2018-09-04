@@ -13,6 +13,7 @@ RUN addgroup -g ${GID} ${NAME} \
 
 RUN mkdir -p /var/www/html/drupal-files && chown www-data:www-data /var/www/html/drupal-files && chmod g+ws /var/www/html/drupal-files
 RUN mkdir -p /var/www/html/web/sites/default/files && chown www-data:www-data /var/www/html/web/sites/default/files && chmod g+ws /var/www/html/web/sites/default/files
+RUN mkdir -p /var/www/html/web/sites/simpletest && chown www-data:www-data /var/www/html/web/sites/simpletest && chmod g+ws /var/www/html/web/sites/simpletest
 
 RUN apk add --no-cache \
    fish \
