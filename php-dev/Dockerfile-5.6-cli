@@ -19,9 +19,15 @@ RUN apk add --no-cache \
    fish \
    less \
    bash \
-   bc groff util-linux coreutils man mdocml-apropos \
+   bc \
+   groff \
+   util-linux \
+   coreutils \
+   man \
+   mdocml-apropos \
    python \
    nodejs \
+   patch \
  && sed -i -e "s/bin\/ash/usr\/bin\/fish/" /etc/passwd
 
 RUN curl -Lo /etc/fish/functions/fisher.fish --create-dirs https://git.io/fisher \
@@ -39,7 +45,17 @@ RUN echo "%www-data ALL=(ALL) NOPASSWD:ALL" > /etc/sudoers.d/50-local
 
 USER ${NAME}
 
-RUN /usr/bin/fish -c "fisher z metro host_info pwd_info segment humanize_duration last_job_id pwd_is_home git_util done z"
+RUN /usr/bin/fish -c "fisher add \
+    fisherman/z \
+    fisherman/metro \
+    fisherman/host_info \
+    fisherman/pwd_info \
+    fisherman/segment \
+    fisherman/humanize_duration \
+    fisherman/last_job_id \
+    fisherman/pwd_is_home \
+    fisherman/git_util \
+    fisherman/done"
 
 CMD /usr/bin/fish
 
